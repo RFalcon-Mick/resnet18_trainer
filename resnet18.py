@@ -76,8 +76,8 @@ if __name__ == '__main__':
     # 如果显卡可用，则用显卡进行训练
     device = "cuda" if torch.cuda.is_available() else "cpu"
     print(f"Using {device} device")
-
-    model = resnet18(num_classes=55)  # num_classes 参数指分类数
+    classes = 55  # 指定分类数
+    model = resnet18(num_classes=classes)  # num_classes 参数指分类数
 
     model = model.to(device)
 
