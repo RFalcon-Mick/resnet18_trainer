@@ -77,7 +77,7 @@ if __name__ == '__main__':
     device = "cuda" if torch.cuda.is_available() else "cpu"
     print(f"Using {device} device")
 
-    model = resnet18(num_classes=55)
+    model = resnet18(num_classes=55)  # num_classes 参数指分类数
 
     model = model.to(device)
 
