@@ -1,5 +1,5 @@
 """
-µ¥Í¼²âÊÔ
+å•å›¾æµ‹è¯•
 """
 
 import torch
@@ -9,12 +9,12 @@ import torchvision.transforms as transforms
 import os
 
 transform_BZ= transforms.Normalize(
-    mean=[0.46402064, 0.45047238, 0.37801373],  # È¡¾öÓÚÊı¾İ¼¯
+    mean=[0.46402064, 0.45047238, 0.37801373],  # å–å†³äºæ•°æ®é›†
     std=[0.2007732, 0.196271, 0.19854763]
 )
 
 
-def padding_black(img,img_size = 512):  # Èç¹û³ß´çÌ«Ğ¡¿ÉÒÔÀ©³ä
+def padding_black(img,img_size = 512):  # å¦‚æœå°ºå¯¸å¤ªå°å¯ä»¥æ‰©å……
     w, h = img.size
     scale = img_size / max(w, h)
     img_fg = img.resize([int(x) for x in [w * scale, h * scale]])
@@ -28,20 +28,20 @@ def padding_black(img,img_size = 512):  # Èç¹û³ß´çÌ«Ğ¡¿ÉÒÔÀ©³ä
 
 if __name__=='__main__':
 
-    img_path = r''  # ÉèÖÃ´«ÈëÍ¼ÏñÂ·¾¶
+    img_path = r''  # è®¾ç½®ä¼ å…¥å›¾åƒè·¯å¾„
 
-    val_tf = transforms.Compose([  # ¼òµ¥°ÑÍ¼Æ¬Ñ¹ËõÁË±ä³ÉTensorÄ£Ê½
+    val_tf = transforms.Compose([  # ç®€å•æŠŠå›¾ç‰‡å‹ç¼©äº†å˜æˆTensoræ¨¡å¼
         transforms.Resize(512),
         transforms.ToTensor(),
-        transform_BZ  # ±ê×¼»¯²Ù×÷
+        transform_BZ  # æ ‡å‡†åŒ–æ“ä½œ
     ])
 
 
 
-    # Èç¹ûÏÔ¿¨¿ÉÓÃ£¬ÔòÓÃÏÔ¿¨½øĞĞÑµÁ·
+    # å¦‚æœæ˜¾å¡å¯ç”¨ï¼Œåˆ™ç”¨æ˜¾å¡è¿›è¡Œè®­ç»ƒ
     device = "cuda" if torch.cuda.is_available() else "cpu"
     print(f"Using {device} device")
-    classes = 55  # Ö¸¶¨·ÖÀàÊı
+    classes = 55  # æŒ‡å®šåˆ†ç±»æ•°
     finetune_net = resnet18(num_classes=classes).to(device)
 
     state_dict = torch.load(r"output/resnet18_e_1e-3_best.pth")
@@ -51,8 +51,8 @@ if __name__=='__main__':
     with torch.no_grad():
 
         # finetune_net.to(device)
-        img = Image.open(img_path)  # ´ò¿ªÍ¼Æ¬
-        img = img.convert('RGB')  # ×ª»»ÎªRGB ¸ñÊ½
+        img = Image.open(img_path)  # æ‰“å¼€å›¾ç‰‡
+        img = img.convert('RGB')  # è½¬æ¢ä¸ºRGB æ ¼å¼
         img = padding_black(img)
         img = val_tf(img)
         img_tensor = torch.unsqueeze(img, 0)    # N,C,H,W, ; C,H,W
@@ -68,4 +68,4 @@ if __name__=='__main__':
         for a,b,c in os.walk("dataset"):
             if len(b) != 0:
                 file_list = b
-                print("Ô¤²â½á¹ûÎª£º", file_list[id])
+                print("é¢„æµ‹ç»“æœä¸ºï¼š", file_list[id])

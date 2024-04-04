@@ -1,6 +1,6 @@
 """
-Êı¾İ¹éÒ»»¯´¦Àí
-Ê¹ÓÃtorchÇó¾ùÖµÓë±ê×¼²î
+æ•°æ®å½’ä¸€åŒ–å¤„ç†
+ä½¿ç”¨torchæ±‚å‡å€¼ä¸æ ‡å‡†å·®
 """
 
 from torchvision.datasets import ImageFolder

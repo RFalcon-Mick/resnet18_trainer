@@ -1,7 +1,7 @@
 """
-Êı¾İÑù±¾·ÖÎö
-»­³öÊı¾İÁ¿ÌõĞÎÍ¼
-»­³öÍ¼Ïñ·Ö±æÂÊÉ¢µãÍ¼
+æ•°æ®æ ·æœ¬åˆ†æ
+ç”»å‡ºæ•°æ®é‡æ¡å½¢å›¾
+ç”»å‡ºå›¾åƒåˆ†è¾¨ç‡æ•£ç‚¹å›¾
 """
 
 import os
@@ -11,12 +11,12 @@ import numpy as np
 
 
 def plot_resolution(dataset_root_path):
-    img_size_list = []  # ³Ğ½ÓËùÓĞÍ¼Æ¬µÄ³¤¿íÊı¾İ
+    img_size_list = []  # æ‰¿æ¥æ‰€æœ‰å›¾ç‰‡çš„é•¿å®½æ•°æ®
     for root, dirs, files in os.walk(dataset_root_path):
         for file_i in files:
             file_i_full_path = os.path.join(root, file_i)
             img_i = Image.open(file_i_full_path)
-            img_i_size = img_i.size  # »ñÈ¡µ¥ÕÅÍ¼ÏñµÄ³¤¿í
+            img_i_size = img_i.size  # è·å–å•å¼ å›¾åƒçš„é•¿å®½
             img_size_list.append(img_i_size)
 
     print(img_size_list)  #
@@ -27,18 +27,18 @@ def plot_resolution(dataset_root_path):
     # print(width_list)   # 640
     # print(height_list)    # 346
 
-    plt.rcParams["font.sans-serif"] = ["SimHei"]  # ÉèÖÃÖĞÎÄ×ÖÌå
+    plt.rcParams["font.sans-serif"] = ["SimHei"]  # è®¾ç½®ä¸­æ–‡å­—ä½“
     plt.rcParams["font.size"] = 8
-    plt.rcParams["axes.unicode_minus"] = False  # ¸ÃÓï¾ä½â¾öÍ¼ÏñÖĞµÄ¡°-¡±¸ººÅµÄÂÒÂëÎÊÌâ
+    plt.rcParams["axes.unicode_minus"] = False  # è¯¥è¯­å¥è§£å†³å›¾åƒä¸­çš„â€œ-â€è´Ÿå·çš„ä¹±ç é—®é¢˜
 
     plt.scatter(width_list, height_list, s=1)
-    plt.xlabel("¿í")
-    plt.ylabel("¸ß")
-    plt.title("Í¼Ïñ¿í¸ß·Ö²¼")
+    plt.xlabel("å®½")
+    plt.ylabel("é«˜")
+    plt.title("å›¾åƒå®½é«˜åˆ†å¸ƒ")
     plt.show()
 
 
-#   »­³öÌõĞÎÍ¼
+#   ç”»å‡ºæ¡å½¢å›¾
 def plot_bar(dataset_root_path):
     file_name_list = []
     file_num_list = []
@@ -49,25 +49,25 @@ def plot_bar(dataset_root_path):
         file_num_list.append(len(files))
 
     file_num_list = file_num_list[1:]
-    # Çó¾ùÖµ£¬²¢°Ñ¾ùÖµÒÔºáÏßĞÎÊ½ÏÔÊ¾³öÀ´
+    # æ±‚å‡å€¼ï¼Œå¹¶æŠŠå‡å€¼ä»¥æ¨ªçº¿å½¢å¼æ˜¾ç¤ºå‡ºæ¥
     mean = np.mean(file_num_list)
     print("mean = ", mean)
 
     bar_positions = np.arange(len(file_name_list))
 
-    fig, ax = plt.subplots()  # ¶¨Òå»­µÄÇø¼äºÍ×Ó»­
-    ax.bar(bar_positions, file_num_list, 0.5)  # »­ÖùÍ¼£¬²ÎÊı£ºÖù¼äµÄ¾àÀë£¬ÖùµÄÖµ£¬ÖùµÄ¿í¶È
+    fig, ax = plt.subplots()  # å®šä¹‰ç”»çš„åŒºé—´å’Œå­ç”»
+    ax.bar(bar_positions, file_num_list, 0.5)  # ç”»æŸ±å›¾ï¼Œå‚æ•°ï¼šæŸ±é—´çš„è·ç¦»ï¼ŒæŸ±çš„å€¼ï¼ŒæŸ±çš„å®½åº¦
 
-    ax.plot(bar_positions, [mean for i in bar_positions], color="red")  # ÏÔÊ¾Æ½¾ùÖµ
+    ax.plot(bar_positions, [mean for i in bar_positions], color="red")  # æ˜¾ç¤ºå¹³å‡å€¼
 
-    plt.rcParams["font.sans-serif"] = ["SimHei"]  # ÉèÖÃÖĞÎÄ×ÖÌå
+    plt.rcParams["font.sans-serif"] = ["SimHei"]  # è®¾ç½®ä¸­æ–‡å­—ä½“
     plt.rcParams["font.size"] = 8
-    plt.rcParams["axes.unicode_minus"] = False  # ¸ÃÓï¾ä½â¾öÍ¼ÏñÖĞµÄ¡°-¡±¸ººÅµÄÂÒÂëÎÊÌâ
+    plt.rcParams["axes.unicode_minus"] = False  # è¯¥è¯­å¥è§£å†³å›¾åƒä¸­çš„â€œ-â€è´Ÿå·çš„ä¹±ç é—®é¢˜
 
-    ax.set_xticks(bar_positions)  # ÉèÖÃxÖáµÄ¿Ì¶È
-    ax.set_xticklabels(file_name_list, rotation=90)  # ÉèÖÃxÖáµÄ±êÇ©
-    ax.set_ylabel("Àà±ğÊıÁ¿")
-    ax.set_title("Êı¾İ·Ö²¼Í¼")
+    ax.set_xticks(bar_positions)  # è®¾ç½®xè½´çš„åˆ»åº¦
+    ax.set_xticklabels(file_name_list, rotation=90)  # è®¾ç½®xè½´çš„æ ‡ç­¾
+    ax.set_ylabel("ç±»åˆ«æ•°é‡")
+    ax.set_title("æ•°æ®åˆ†å¸ƒå›¾")
     plt.show()
 
 

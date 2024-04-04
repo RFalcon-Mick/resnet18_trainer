@@ -1,5 +1,5 @@
 """
-    Ê¹ÓÃ·­×ª½øĞĞÊı¾İÔöÇ¿
+ä½¿ç”¨ç¿»è½¬è¿›è¡Œæ•°æ®å¢å¼º
 """
 
 import os
@@ -7,21 +7,21 @@ import cv2
 import numpy as np
 
 
-# Ë®Æ½·­×ª
+# æ°´å¹³ç¿»è½¬
 def Horizontal(image):
-    return cv2.flip(image, 1, dst=None)  # Ë®Æ½¾µÏñ
+    return cv2.flip(image, 1, dst=None)  # æ°´å¹³é•œåƒ
 
 
-# ´¹Ö±·­×ª
+# å‚ç›´ç¿»è½¬
 def Vertical(image):
-    return cv2.flip(image, 0, dst=None)  # ´¹Ö±¾µÏñ
+    return cv2.flip(image, 0, dst=None)  # å‚ç›´é•œåƒ
 
 
 if __name__ == '__main__':
     from_root = r"dataset"
     save_root = r"enhance_dataset"
 
-    threshold = 200  # Éè¶¨Êı¾İÔöÇ¿ãĞÖµ
+    threshold = 200  # è®¾å®šæ•°æ®å¢å¼ºé˜ˆå€¼
 
     for a, b, c in os.walk(from_root):
         for file_i in c:
@@ -37,19 +37,19 @@ if __name__ == '__main__':
             if os.path.isdir(save_path) == False:
                 os.makedirs(save_path)
 
-            img_i = cv2.imdecode(np.fromfile(file_i_path, dtype=np.uint8), -1)  # ¶ÁÈ¡Í¼Æ¬
+            img_i = cv2.imdecode(np.fromfile(file_i_path, dtype=np.uint8), -1)  # è¯»å–å›¾ç‰‡
 
-            cv2.imencode('.jpg', img_i)[1].tofile(os.path.join(save_path, file_i[:-5] + "_original.jpg"))  # ±£´æÍ¼Æ¬
+            cv2.imencode('.jpg', img_i)[1].tofile(os.path.join(save_path, file_i[:-5] + "_original.jpg"))  # ä¿å­˜å›¾ç‰‡
 
             if len(c) < threshold:
 
                 img_horizontal = Horizontal(img_i)
                 cv2.imencode('.jpg', img_horizontal)[1].tofile(
-                    os.path.join(save_path, file_i[:-5] + "_horizontal.jpg"))  # ±£´æÍ¼Æ¬
+                    os.path.join(save_path, file_i[:-5] + "_horizontal.jpg"))  # ä¿å­˜å›¾ç‰‡
 
                 img_vertical = Vertical(img_i)
                 cv2.imencode('.jpg', img_vertical)[1].tofile(
-                    os.path.join(save_path, file_i[:-5] + "_vertical.jpg"))  # ±£´æÍ¼Æ¬
+                    os.path.join(save_path, file_i[:-5] + "_vertical.jpg"))  # ä¿å­˜å›¾ç‰‡
 
             else:
                 pass

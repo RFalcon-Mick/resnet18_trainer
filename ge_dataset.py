@@ -1,11 +1,11 @@
 """
-Éú³ÉÊı¾İ¼¯
+ç”Ÿæˆæ•°æ®é›†
 """
 
 import os
 import random
 
-# ÉèÖÃÑµÁ·¼¯Óë²âÊÔ¼¯±ÈÀı
+# è®¾ç½®è®­ç»ƒé›†ä¸æµ‹è¯•é›†æ¯”ä¾‹
 train_ratio = 0.9
 test_ratio = 1-train_ratio
 

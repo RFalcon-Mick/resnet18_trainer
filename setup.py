@@ -1,5 +1,5 @@
 """
-ÏîÄ¿³õÊ¼»¯
+é¡¹ç›®åˆå§‹åŒ–
 """
 
 import os
@@ -9,9 +9,9 @@ def create_folders():
     try:
         os.mkdir("output")
         os.mkdir("dataset")
-        print("ÎÄ¼ş¼Ğ´´½¨³É¹¦£¡")
+        print("æ–‡ä»¶å¤¹åˆ›å»ºæˆåŠŸï¼")
     except FileExistsError:
-        print("ÎÄ¼ş¼ĞÒÑ´æÔÚ¡£")
+        print("æ–‡ä»¶å¤¹å·²å­˜åœ¨ã€‚")
 
 
 if __name__ == "__main__":

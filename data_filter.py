@@ -1,7 +1,7 @@
 """
-Êı¾İ´¦Àí
-¹ıÂË¹ı´óÍ¼Ïñ
-¹ıÂËÍ¼Ïñ³¤¿í²»·ûºÏÒ»¶¨±ÈÀı
+æ•°æ®å¤„ç†
+è¿‡æ»¤è¿‡å¤§å›¾åƒ
+è¿‡æ»¤å›¾åƒé•¿å®½ä¸ç¬¦åˆä¸€å®šæ¯”ä¾‹
 """
 
 from PIL import Image
@@ -9,40 +9,40 @@ import os
 
 dataset_root_path = "dataset"
 
-min = 200   # ¶Ì±ß
-max = 2000  # ³¤±ß
-ratio = 0.5 # ¶Ì±ß / ³¤±ß
+min = 200   # çŸ­è¾¹
+max = 2000  # é•¿è¾¹
+ratio = 0.5 # çŸ­è¾¹ / é•¿è¾¹
 
-delete_list = [] # ³Ğ½ÓËùÓĞÍ¼Æ¬µÄ³¤¿íÊı¾İ
+delete_list = [] # æ‰¿æ¥æ‰€æœ‰å›¾ç‰‡çš„é•¿å®½æ•°æ®
 for root,dirs,files in os.walk(dataset_root_path):
     for file_i in files:
         file_i_full_path = os.path.join(root, file_i)
         img_i = Image.open(file_i_full_path)
-        img_i_size = img_i.size  # »ñÈ¡µ¥ÕÅÍ¼ÏñµÄ³¤¿í
+        img_i_size = img_i.size  # è·å–å•å¼ å›¾åƒçš„é•¿å®½
 
-        # É¾³ıµ¥±ß¹ı¶ÌµÄÍ¼Æ¬
+        # åˆ é™¤å•è¾¹è¿‡çŸ­çš„å›¾ç‰‡
         if img_i_size[0]<min or img_i_size[1]<min:
-            print(file_i_full_path, " ²»Âú×ãÒªÇó")
+            print(file_i_full_path, " ä¸æ»¡è¶³è¦æ±‚")
             delete_list.append(file_i_full_path)
 
-        # É¾³ıµ¥±ß¹ı³¤µÄÍ¼Æ¬
+        # åˆ é™¤å•è¾¹è¿‡é•¿çš„å›¾ç‰‡
         if img_i_size[0] > max or img_i_size[1] > max:
-            print(file_i_full_path, " ²»Âú×ãÒªÇó")
+            print(file_i_full_path, " ä¸æ»¡è¶³è¦æ±‚")
             delete_list.append(file_i_full_path)
 
-        # É¾³ı¿í¸ß±ÈÀı²»µ±µÄÍ¼Æ¬
+        # åˆ é™¤å®½é«˜æ¯”ä¾‹ä¸å½“çš„å›¾ç‰‡
         long = img_i_size[0] if img_i_size[0] > img_i_size[1] else img_i_size[1]
         short = img_i_size[0] if img_i_size[0] < img_i_size[1] else img_i_size[1]
 
         if short / long < ratio:
-            print(file_i_full_path, " ²»Âú×ãÒªÇó",img_i_size[0],img_i_size[1])
+            print(file_i_full_path, " ä¸æ»¡è¶³è¦æ±‚",img_i_size[0],img_i_size[1])
             delete_list.append(file_i_full_path)
 
 
 # print(delete_list)
 for file_i in delete_list:
     try:
-        print("ÕıÔÚÉ¾³ı",file_i)
+        print("æ­£åœ¨åˆ é™¤",file_i)
         os.remove(file_i)
     except:
         pass

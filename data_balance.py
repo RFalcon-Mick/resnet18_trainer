@@ -1,6 +1,6 @@
 """
-±éÀúdatasetÖĞÃ¿¸öÄ¿Â¼
-É¾³ı³¬¹ıÒ»¶¨ãĞÖµµÄÊı¾İ
+éå†datasetä¸­æ¯ä¸ªç›®å½•
+åˆ é™¤è¶…è¿‡ä¸€å®šé˜ˆå€¼çš„æ•°æ®
 """
 
 import os
@@ -22,4 +22,4 @@ for a,b,c in os.walk(img_root):
         delete_list = delete_list[threshold:]
         for file_delete_i in delete_list:
             os.remove(file_delete_i)
-            print("½«»áÉ¾³ı",file_delete_i)
+            print("å°†ä¼šåˆ é™¤",file_delete_i)

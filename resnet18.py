@@ -1,5 +1,5 @@
 """
-ÑµÁ·Ä£ĞÍ£¨Resnet18£©
+è®­ç»ƒæ¨¡å‹ï¼ˆResnet18ï¼‰
 """
 
 import time
@@ -14,24 +14,24 @@ from torchvision.models import resnet18
 def train(dataloader, model, loss_fn, optimizer, device):
     size = len(dataloader.dataset)
     avg_loss = 0
-    # ´ÓÊı¾İ¼ÓÔØÆ÷ÖĞ¶ÁÈ¡batch£¨Ò»´Î¶ÁÈ¡¶àÉÙÕÅ£¬¼´Åú´ÎÊı£©£¬X(Í¼Æ¬Êı¾İ)£¬y£¨Í¼Æ¬ÕæÊµ±êÇ©£©¡£
-    for batch, (X, y) in enumerate(dataloader):  # ¹Ì¶¨¸ñÊ½£ºbatch£ºµÚ¼¸ÅúÊı¾İ£¬²»ÊÇÅú´Î´óĞ¡£¬£¨X£¬y£©£ºÊıÖµÓÃÀ¨ºÅ
-        # ½«Êı¾İ´æµ½ÏÔ¿¨
+    # ä»æ•°æ®åŠ è½½å™¨ä¸­è¯»å–batchï¼ˆä¸€æ¬¡è¯»å–å¤šå°‘å¼ ï¼Œå³æ‰¹æ¬¡æ•°ï¼‰ï¼ŒX(å›¾ç‰‡æ•°æ®)ï¼Œyï¼ˆå›¾ç‰‡çœŸå®æ ‡ç­¾ï¼‰ã€‚
+    for batch, (X, y) in enumerate(dataloader):  # å›ºå®šæ ¼å¼ï¼šbatchï¼šç¬¬å‡ æ‰¹æ•°æ®ï¼Œä¸æ˜¯æ‰¹æ¬¡å¤§å°ï¼Œï¼ˆXï¼Œyï¼‰ï¼šæ•°å€¼ç”¨æ‹¬å·
+        # å°†æ•°æ®å­˜åˆ°æ˜¾å¡
         X, y = X.to(device), y.to(device)
-        # µÃµ½Ô¤²âµÄ½á¹ûpred
+        # å¾—åˆ°é¢„æµ‹çš„ç»“æœpred
         pred = model(X)
         loss = loss_fn(pred, y)
         avg_loss += loss
-        # ·´Ïò´«²¥£¬¸üĞÂÄ£ĞÍ²ÎÊı
+        # åå‘ä¼ æ’­ï¼Œæ›´æ–°æ¨¡å‹å‚æ•°
         optimizer.zero_grad()
         loss.backward()
         optimizer.step()
-        # Ã¿ÑµÁ·10´Î£¬Êä³öÒ»´Îµ±Ç°ĞÅÏ¢
+        # æ¯è®­ç»ƒ10æ¬¡ï¼Œè¾“å‡ºä¸€æ¬¡å½“å‰ä¿¡æ¯
         if batch % 10 == 0:
             loss, current = loss.item(), batch * len(X)
             print(f"loss: {loss:>7f}  [{current:>5d}/{size:>5d}]")
 
-    # µ±Ò»¸öepochÍêÁËºó·µ»ØÆ½¾ù loss
+    # å½“ä¸€ä¸ªepochå®Œäº†åè¿”å›å¹³å‡ loss
     avg_loss /= size
     avg_loss = avg_loss.detach().cpu().numpy()
     return avg_loss
@@ -39,22 +39,22 @@ def train(dataloader, model, loss_fn, optimizer, device):
 
 def validate(dataloader, model, loss_fn, device):
     size = len(dataloader.dataset)
-    # ½«Ä£ĞÍ×ªÎªÑéÖ¤Ä£Ê½
+    # å°†æ¨¡å‹è½¬ä¸ºéªŒè¯æ¨¡å¼
     model.eval()
-    # ³õÊ¼»¯test_loss ºÍ correct£¬ ÓÃÀ´Í³¼ÆÃ¿´ÎµÄÎó²î
+    # åˆå§‹åŒ–test_loss å’Œ correctï¼Œ ç”¨æ¥ç»Ÿè®¡æ¯æ¬¡çš„è¯¯å·®
     test_loss, correct = 0, 0
-    # ²âÊÔÊ±Ä£ĞÍ²ÎÊı²»ÓÃ¸üĞÂ£¬ËùÒÔno_gard()
-    # ·ÇÑµÁ·£¬ ÍÆÀíÆÚÓÃµ½
+    # æµ‹è¯•æ—¶æ¨¡å‹å‚æ•°ä¸ç”¨æ›´æ–°ï¼Œæ‰€ä»¥no_gard()
+    # éè®­ç»ƒï¼Œ æ¨ç†æœŸç”¨åˆ°
     with torch.no_grad():
-        # ¼ÓÔØÊı¾İ¼ÓÔØÆ÷£¬µÃµ½ÀïÃæµÄX£¨Í¼Æ¬Êı¾İ£©ºÍy(ÕæÊµ±êÇ©£©
+        # åŠ è½½æ•°æ®åŠ è½½å™¨ï¼Œå¾—åˆ°é‡Œé¢çš„Xï¼ˆå›¾ç‰‡æ•°æ®ï¼‰å’Œy(çœŸå®æ ‡ç­¾ï¼‰
         for X, y in dataloader:
-            # ½«Êı¾İ×ªµ½GPU
+            # å°†æ•°æ®è½¬åˆ°GPU
             X, y = X.to(device), y.to(device)
-            # ½«Í¼Æ¬´«Èëµ½Ä£ĞÍµ±ÖĞ¾Í£¬µÃµ½Ô¤²âµÄÖµpred
+            # å°†å›¾ç‰‡ä¼ å…¥åˆ°æ¨¡å‹å½“ä¸­å°±ï¼Œå¾—åˆ°é¢„æµ‹çš„å€¼pred
             pred = model(X)
-            # ¼ÆËãÔ¤²âÖµpredºÍÕæÊµÖµyµÄ²î¾à
+            # è®¡ç®—é¢„æµ‹å€¼predå’ŒçœŸå®å€¼yçš„å·®è·
             test_loss += loss_fn(pred, y).item()
-            # Í³¼ÆÔ¤²âÕıÈ·µÄ¸öÊı(Õë¶Ô·ÖÀà)
+            # ç»Ÿè®¡é¢„æµ‹æ­£ç¡®çš„ä¸ªæ•°(é’ˆå¯¹åˆ†ç±»)
             correct += (pred.argmax(1) == y).type(torch.float).sum().item()
     test_loss /= size
     correct /= size
@@ -65,7 +65,7 @@ def validate(dataloader, model, loss_fn, device):
 if __name__ == '__main__':
     batch_size = 5
 
-    # # ¸øÑµÁ·¼¯ºÍ²âÊÔ¼¯·Ö±ğ´´½¨Ò»¸öÊı¾İ¼¯¼ÓÔØÆ÷
+    # # ç»™è®­ç»ƒé›†å’Œæµ‹è¯•é›†åˆ†åˆ«åˆ›å»ºä¸€ä¸ªæ•°æ®é›†åŠ è½½å™¨
     train_data = LoadData("train.txt", True)
     valid_data = LoadData("test.txt", False)
 
@@ -73,18 +73,18 @@ if __name__ == '__main__':
                                   shuffle=True)
     valid_dataloader = DataLoader(dataset=valid_data, num_workers=4, pin_memory=True, batch_size=batch_size)
 
-    # Èç¹ûÏÔ¿¨¿ÉÓÃ£¬ÔòÓÃÏÔ¿¨½øĞĞÑµÁ·
+    # å¦‚æœæ˜¾å¡å¯ç”¨ï¼Œåˆ™ç”¨æ˜¾å¡è¿›è¡Œè®­ç»ƒ
     device = "cuda" if torch.cuda.is_available() else "cpu"
     print(f"Using {device} device")
-    classes = 55  # Ö¸¶¨·ÖÀàÊı
-    model = resnet18(num_classes=classes)  # num_classes ²ÎÊıÖ¸·ÖÀàÊı
+    classes = 55  # æŒ‡å®šåˆ†ç±»æ•°
+    model = resnet18(num_classes=classes)  # num_classes å‚æ•°æŒ‡åˆ†ç±»æ•°
 
     model = model.to(device)
 
-    # ¶¨ÒåËğÊ§º¯Êı£¬¼ÆËãÏà²î¶àÉÙ£¬½»²æìØ£¬
+    # å®šä¹‰æŸå¤±å‡½æ•°ï¼Œè®¡ç®—ç›¸å·®å¤šå°‘ï¼Œäº¤å‰ç†µï¼Œ
     loss_fn = nn.CrossEntropyLoss()
 
-    # ¶¨ÒåÓÅ»¯Æ÷£¬ÓÃÀ´ÑµÁ·Ê±ºòÓÅ»¯Ä£ĞÍ²ÎÊı£¬Ëæ»úÌİ¶ÈÏÂ½µ·¨
+    # å®šä¹‰ä¼˜åŒ–å™¨ï¼Œç”¨æ¥è®­ç»ƒæ—¶å€™ä¼˜åŒ–æ¨¡å‹å‚æ•°ï¼Œéšæœºæ¢¯åº¦ä¸‹é™æ³•
     learning_rate = 1e-3
     optimizer = torch.optim.SGD(model.parameters(), lr=learning_rate)
 
@@ -100,7 +100,7 @@ if __name__ == '__main__':
         print(f"train time: {(time_end - time_start)}")
         # (dataloader, model, loss_fn, device)jif
         val_accuracy, val_loss = validate(valid_dataloader, model, loss_fn, device)
-        # Ğ´ÈëÊı¾İ
+        # å†™å…¥æ•°æ®
         WriteData(save_root + "resnet18_no_pretrain.txt",
                   "epoch", t,
                   "train_loss", avg_loss,

@@ -1,5 +1,5 @@
 """
-Éú³Édataloader
+ç”Ÿæˆdataloader
 """
 
 import torch
@@ -11,10 +11,10 @@ ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 from torch.utils.data import Dataset
 
-# Êı¾İ¹éÒ»»¯Óë±ê×¼»¯
+# æ•°æ®å½’ä¸€åŒ–ä¸æ ‡å‡†åŒ–
 
 transform_BZ= transforms.Normalize(
-    mean=[0.52225417, 0.4851904, 0.42605346],# È¡¾öÓÚÊı¾İ¼¯
+    mean=[0.52225417, 0.4851904, 0.42605346],# å–å†³äºæ•°æ®é›†
     std=[0.20513351, 0.20246686, 0.20748332]
 )
 
@@ -27,24 +27,24 @@ class LoadData(Dataset):
 
         self.train_tf = transforms.Compose([
                 transforms.Resize(self.img_size),
-                transforms.RandomHorizontalFlip(),#¶ÔÍ¼Æ¬½øĞĞËæ»úµÄË®Æ½·­×ª
-                transforms.RandomVerticalFlip(),#Ëæ»úµÄ´¹Ö±·­×ª
-                transforms.ToTensor(),#°ÑÍ¼Æ¬¸ÄÎªTensor¸ñÊ½
-                transform_BZ#Í¼Æ¬±ê×¼»¯µÄ²½Öè
+                transforms.RandomHorizontalFlip(),#å¯¹å›¾ç‰‡è¿›è¡Œéšæœºçš„æ°´å¹³ç¿»è½¬
+                transforms.RandomVerticalFlip(),#éšæœºçš„å‚ç›´ç¿»è½¬
+                transforms.ToTensor(),#æŠŠå›¾ç‰‡æ”¹ä¸ºTensoræ ¼å¼
+                transform_BZ#å›¾ç‰‡æ ‡å‡†åŒ–çš„æ­¥éª¤
             ])
-        self.val_tf = transforms.Compose([##¼òµ¥°ÑÍ¼Æ¬Ñ¹ËõÁË±ä³ÉTensorÄ£Ê½
+        self.val_tf = transforms.Compose([##ç®€å•æŠŠå›¾ç‰‡å‹ç¼©äº†å˜æˆTensoræ¨¡å¼
                 transforms.Resize(self.img_size),
                 transforms.ToTensor(),
-                transform_BZ#±ê×¼»¯²Ù×÷
+                transform_BZ#æ ‡å‡†åŒ–æ“ä½œ
             ])
 
     def get_images(self, txt_path):
         with open(txt_path, 'r', encoding='utf-8') as f:
             imgs_info = f.readlines()
             imgs_info = list(map(lambda x:x.strip().split('\t'), imgs_info))
-        return imgs_info#·µ»ØÍ¼Æ¬ĞÅÏ¢
+        return imgs_info#è¿”å›å›¾ç‰‡ä¿¡æ¯
 
-    def padding_black(self, img):   # Èç¹û³ß´çÌ«Ğ¡¿ÉÒÔÀ©³ä
+    def padding_black(self, img):   # å¦‚æœå°ºå¯¸å¤ªå°å¯ä»¥æ‰©å……
         w, h  = img.size
         scale = self.img_size / max(w, h)
         img_fg = img.resize([int(x) for x in [w * scale, h * scale]])
@@ -56,10 +56,10 @@ class LoadData(Dataset):
         img = img_bg
         return img
 
-    def __getitem__(self, index):#·µ»ØÕæÕıÏë·µ»ØµÄ¶«Î÷
+    def __getitem__(self, index):#è¿”å›çœŸæ­£æƒ³è¿”å›çš„ä¸œè¥¿
         img_path, label = self.imgs_info[index]
-        img = Image.open(img_path)#´ò¿ªÍ¼Æ¬
-        img = img.convert('RGB')#×ª»»ÎªRGB ¸ñÊ½
+        img = Image.open(img_path)#æ‰“å¼€å›¾ç‰‡
+        img = img.convert('RGB')#è½¬æ¢ä¸ºRGB æ ¼å¼
         img = self.padding_black(img)
         if self.train_flag:
             img = self.train_tf(img)
@@ -81,7 +81,7 @@ def WriteData(fname, *args):
 
 if __name__ == "__main__":
     train_dataset = LoadData("train.txt", True)
-    print("Êı¾İ¸öÊı£º", len(train_dataset))
+    print("æ•°æ®ä¸ªæ•°ï¼š", len(train_dataset))
     train_loader = torch.utils.data.DataLoader(dataset=train_dataset,
                                                batch_size=10,
                                                shuffle=True)
