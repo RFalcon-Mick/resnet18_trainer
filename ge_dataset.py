@@ -9,7 +9,7 @@ import random
 train_ratio = 0.9
 test_ratio = 1-train_ratio
 
-rootdata = r"enhance_dataset"
+rootdata = r'enhance_dataset' if os.path.exists(r'enhance_dataset') else r'dataset'
 
 train_list, test_list = [],[]
 
