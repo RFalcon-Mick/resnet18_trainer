@@ -3,6 +3,7 @@
 使用torch求均值与标准差
 """
 
+import os
 from torchvision.datasets import ImageFolder
 import torch
 from torchvision import transforms as T
@@ -29,5 +30,8 @@ def getStat(train_data):
 
 
 if __name__ == '__main__':
-    train_dataset = ImageFolder(root=r'enhance_dataset', transform=transform)
+    # 检查enhance_dataset是否存在，如果不存在则使用dataset
+    root = r'enhance_dataset' if os.path.exists(r'enhance_dataset') else r'dataset'
+
+    train_dataset = ImageFolder(root=root, transform=transform)
     print(getStat(train_dataset))
