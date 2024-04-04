@@ -9,8 +9,8 @@ import torchvision.transforms as transforms
 import os
 
 transform_BZ= transforms.Normalize(
-    mean=[0.46402064, 0.45047238, 0.37801373],  # 取决于数据集
-    std=[0.2007732, 0.196271, 0.19854763]
+    mean=[0.50321096, 0.440078, 0.30505583],  # 取决于数据集
+    std=[0.23690243, 0.21100858, 0.21088462]
 )
 
 
@@ -41,10 +41,10 @@ if __name__=='__main__':
     # 如果显卡可用，则用显卡进行训练
     device = "cuda" if torch.cuda.is_available() else "cpu"
     print(f"Using {device} device")
-    classes = 55  # 指定分类数
+    classes = 5  # 指定分类数
     finetune_net = resnet18(num_classes=classes).to(device)
 
-    state_dict = torch.load(r"output/resnet18_e_1e-3_best.pth")
+    state_dict = torch.load(r"output/resnet18_e_best.pth")
     # print("state_dict = ",state_dict)
     finetune_net.load_state_dict(state_dict)
     finetune_net.eval()
