@@ -76,4 +76,4 @@ if __name__ == '__main__':
 
     plot_resolution(dataset_root_path)
 
-    # plot_bar(dataset_root_path)
+    plot_bar(dataset_root_path)
